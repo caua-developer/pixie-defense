@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/base.gd" id="base_script"]
 [ext_resource type="Script" path="res://scripts/mago.gd" id="mago_script"]
 [ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
+[ext_resource type="Script" path="res://scripts/corredor.gd" id="corredor_script"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="enemy_scene"]
 
 [node name="Main" type="Node2D" unique_id=1404636165]
 
@@ -18,3 +20,9 @@ polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [node name="Base" type="Node" parent="." unique_id=1507380317]
 script = ExtResource("base_script")
+
+[node name="Corredor1" type="Path2D" parent="." unique_id=1346414365]
+script = ExtResource("corredor_script")
+enemy_scene = ExtResource("enemy_scene")
+
+[node name="SpawnTimer" type="Timer" parent="Corredor1" unique_id=137679326]
