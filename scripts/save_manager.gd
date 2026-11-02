@@ -10,7 +10,7 @@ func load_specialization() -> String:
 	if not has_save():
 		return ""
 	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	var data = JSON.parse_string(file.get_as_text())
+	var data: Variant = JSON.parse_string(file.get_as_text())
 	file.close()
 	if data == null or not data.has("specialization_tree"):
 		return ""

@@ -13,7 +13,7 @@ const SaveManagerScript = preload("res://scripts/save_manager.gd")
 @onready var skill_tree_panel: PanelContainer = $HUD/SkillTreePanel
 @onready var specialization_panel: PanelContainer = $HUD/SpecializationSelectPanel
 
-var save_manager
+var save_manager: RefCounted
 
 func _ready() -> void:
 	save_manager = SaveManagerScript.new()
