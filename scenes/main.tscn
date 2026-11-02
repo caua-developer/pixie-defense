@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/essence_tracker.gd" id="essence_tracker_script"]
 [ext_resource type="Script" path="res://scripts/mago.gd" id="mago_script"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="main_script"]
+[ext_resource type="Script" path="res://scripts/skill_tree_panel.gd" id="skill_tree_panel_script"]
 [ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
 
 [node name="Main" type="Node2D" unique_id=1404636165]
@@ -79,5 +80,68 @@ text = "FIM DE FASE"
 layout_mode = 2
 text = "Essência: 0 (Fragmentos: 0/10)"
 
+[node name="SkillTreeButton" type="Button" parent="HUD/Root/VBox" unique_id=226984120]
+layout_mode = 2
+text = "Árvore"
+
 [node name="EssenceTracker" type="Node" parent="." unique_id=1023635728]
 script = ExtResource("essence_tracker_script")
+
+[node name="SkillTreePanel" type="PanelContainer" parent="." unique_id=84338893]
+visible = false
+custom_minimum_size = Vector2(320, 220)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("skill_tree_panel_script")
+
+[node name="VBox" type="VBoxContainer" parent="SkillTreePanel" unique_id=1770264128]
+layout_mode = 2
+
+[node name="Node1Row" type="HBoxContainer" parent="SkillTreePanel/VBox" unique_id=1589141592]
+layout_mode = 2
+
+[node name="Node1Label" type="Label" parent="SkillTreePanel/VBox/Node1Row" unique_id=892158941]
+layout_mode = 2
+
+[node name="Node1Button" type="Button" parent="SkillTreePanel/VBox/Node1Row" unique_id=1211925332]
+layout_mode = 2
+text = "Comprar"
+
+[node name="Node2Row" type="HBoxContainer" parent="SkillTreePanel/VBox" unique_id=745206844]
+layout_mode = 2
+
+[node name="Node2Label" type="Label" parent="SkillTreePanel/VBox/Node2Row" unique_id=2094292354]
+layout_mode = 2
+
+[node name="Node2Button" type="Button" parent="SkillTreePanel/VBox/Node2Row" unique_id=291466916]
+layout_mode = 2
+text = "Comprar"
+
+[node name="Node3Row" type="HBoxContainer" parent="SkillTreePanel/VBox" unique_id=1198460764]
+layout_mode = 2
+
+[node name="Node3Label" type="Label" parent="SkillTreePanel/VBox/Node3Row" unique_id=1949246954]
+layout_mode = 2
+
+[node name="Node3Button" type="Button" parent="SkillTreePanel/VBox/Node3Row" unique_id=661944757]
+layout_mode = 2
+text = "Comprar"
+
+[node name="Node4Row" type="HBoxContainer" parent="SkillTreePanel/VBox" unique_id=1025560729]
+layout_mode = 2
+
+[node name="Node4Label" type="Label" parent="SkillTreePanel/VBox/Node4Row" unique_id=2089195007]
+layout_mode = 2
+
+[node name="Node4Button" type="Button" parent="SkillTreePanel/VBox/Node4Row" unique_id=1269119670]
+layout_mode = 2
+text = "Comprar"
+
+[node name="CloseButton" type="Button" parent="SkillTreePanel/VBox" unique_id=936977209]
+layout_mode = 2
+text = "Fechar"
