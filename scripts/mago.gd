@@ -20,6 +20,7 @@ var spell_cost: float = BASE_SPELL_COST
 var spell_cooldown: float = BASE_SPELL_COOLDOWN
 var spell_radius: float = BASE_SPELL_RADIUS
 var spell_damage: float = BASE_SPELL_DAMAGE
+var specialization: String = "Destrutiva"
 
 var _has_pending_cast: bool = false
 var _pending_cast_position: Vector2
