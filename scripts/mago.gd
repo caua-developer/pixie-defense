@@ -2,18 +2,42 @@ extends Node2D
 
 const MAX_MANA: float = 100.0
 const MANA_REGEN_PER_SEC: float = 10.0  # hipótese — calibrar na Fase 10
-const SPELL_COST: float = 25.0          # hipótese — calibrar na Fase 10
-const SPELL_COOLDOWN: float = 1.0       # segundos, hipótese — calibrar na Fase 10
-const SPELL_RADIUS: float = 80.0        # px, hipótese — calibrar na Fase 10
-const SPELL_DAMAGE: float = 50.0        # hipótese — calibrar na Fase 10 (mata o inimigo tier branco em 1 acerto)
+const BASE_SPELL_COST: float = 25.0     # hipótese — calibrar na Fase 10
+const BASE_SPELL_COOLDOWN: float = 1.0  # segundos, hipótese — calibrar na Fase 10
+const BASE_SPELL_RADIUS: float = 80.0   # px, hipótese — calibrar na Fase 10
+const BASE_SPELL_DAMAGE: float = 50.0   # hipótese — calibrar na Fase 10 (mata o inimigo tier branco em 1 acerto)
+
+const DAMAGE_UPGRADE_MULT: float = 1.2    # hipótese — calibrar na Fase 10
+const COOLDOWN_UPGRADE_MULT: float = 0.8  # hipótese — calibrar na Fase 10
+const MANA_COST_UPGRADE_MULT: float = 0.8 # hipótese — calibrar na Fase 10
+const RADIUS_UPGRADE_MULT: float = 1.2    # hipótese — calibrar na Fase 10
 
 @export var spell_effect_scene: PackedScene
 
 var mana: float = MAX_MANA
 var cooldown_remaining: float = 0.0
+var spell_cost: float = BASE_SPELL_COST
+var spell_cooldown: float = BASE_SPELL_COOLDOWN
+var spell_radius: float = BASE_SPELL_RADIUS
+var spell_damage: float = BASE_SPELL_DAMAGE
 
 var _has_pending_cast: bool = false
 var _pending_cast_position: Vector2
+
+func _ready() -> void:
+	add_to_group("mago")
+
+func upgrade_damage() -> void:
+	spell_damage *= DAMAGE_UPGRADE_MULT
+
+func reduce_cooldown() -> void:
+	spell_cooldown *= COOLDOWN_UPGRADE_MULT
+
+func reduce_mana_cost() -> void:
+	spell_cost *= MANA_COST_UPGRADE_MULT
+
+func increase_radius() -> void:
+	spell_radius *= RADIUS_UPGRADE_MULT
 
 func _process(delta: float) -> void:
 	mana = min(MAX_MANA, mana + MANA_REGEN_PER_SEC * delta)
@@ -24,10 +48,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		_try_cast(get_global_mouse_position())
 
 func _try_cast(target_pos: Vector2) -> void:
-	if cooldown_remaining > 0.0 or mana < SPELL_COST:
+	if cooldown_remaining > 0.0 or mana < spell_cost:
 		return
-	mana -= SPELL_COST
-	cooldown_remaining = SPELL_COOLDOWN
+	mana -= spell_cost
+	cooldown_remaining = spell_cooldown
 	_pending_cast_position = target_pos
 	_has_pending_cast = true
 	_spawn_spell_effect(target_pos)
@@ -37,7 +61,7 @@ func _physics_process(_delta: float) -> void:
 		return
 	_has_pending_cast = false
 	var shape := CircleShape2D.new()
-	shape.radius = SPELL_RADIUS
+	shape.radius = spell_radius
 	var query := PhysicsShapeQueryParameters2D.new()
 	query.shape = shape
 	query.transform = Transform2D(0.0, _pending_cast_position)
@@ -48,12 +72,12 @@ func _physics_process(_delta: float) -> void:
 	for result in space_state.intersect_shape(query):
 		var collider = result["collider"]
 		if collider.has_method("take_damage"):
-			collider.take_damage(SPELL_DAMAGE)
+			collider.take_damage(spell_damage)
 
 func _spawn_spell_effect(target_pos: Vector2) -> void:
 	if spell_effect_scene == null:
 		return
 	var effect: Node2D = spell_effect_scene.instantiate()
 	effect.position = target_pos
-	effect.radius = SPELL_RADIUS
+	effect.radius = spell_radius
 	get_parent().add_child(effect)
