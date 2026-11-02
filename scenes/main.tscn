@@ -1,12 +1,16 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/base.gd" id="base_script"]
+[ext_resource type="Script" path="res://scripts/mago.gd" id="mago_script"]
+[ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
 
 [node name="Main" type="Node2D" unique_id=1404636165]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=495020440]
 
 [node name="Mago" type="Node2D" parent="." unique_id=2029505939]
+script = ExtResource("mago_script")
+spell_effect_scene = ExtResource("spell_effect_scene")
 
 [node name="Placeholder" type="Polygon2D" parent="Mago" unique_id=48742051]
 color = Color(0.85, 0.85, 1, 1)
