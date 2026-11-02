@@ -6,8 +6,10 @@ const NODE_COSTS: Array[int] = [1, 2, 3, 4]
 
 var purchased: Array[bool] = [false, false, false, false]
 
-@onready var mago: Node2D = get_tree().get_first_node_in_group("mago")
-@onready var essence_tracker: Node = get_tree().get_first_node_in_group("essencia")
+var mago: Node2D
+var essence_tracker: Node
+
+@onready var balance_label: Label = $VBox/BalanceLabel
 @onready var node_labels: Array[Label] = [
 	$VBox/Node1Row/Node1Label, $VBox/Node2Row/Node2Label,
 	$VBox/Node3Row/Node3Label, $VBox/Node4Row/Node4Label,
@@ -24,9 +26,16 @@ func _ready() -> void:
 	for i in NODE_COUNT:
 		node_buttons[i].pressed.connect(_on_node_pressed.bind(i))
 	close_button.pressed.connect(close)
-	_update_labels()
+
+func _ensure_refs() -> void:
+	if mago == null:
+		mago = get_tree().get_first_node_in_group("mago")
+	if essence_tracker == null:
+		essence_tracker = get_tree().get_first_node_in_group("essencia")
 
 func open() -> void:
+	_ensure_refs()
+	_update_labels()
 	visible = true
 	get_tree().paused = true
 
@@ -35,6 +44,7 @@ func close() -> void:
 	get_tree().paused = false
 
 func _on_node_pressed(index: int) -> void:
+	_ensure_refs()
 	if purchased[index] or essence_tracker.essence < NODE_COSTS[index]:
 		return
 	essence_tracker.essence -= NODE_COSTS[index]
@@ -47,6 +57,7 @@ func _on_node_pressed(index: int) -> void:
 	_update_labels()
 
 func _update_labels() -> void:
+	balance_label.text = "Essência disponível: %d" % essence_tracker.essence
 	for i in NODE_COUNT:
 		var status: String = "comprado" if purchased[i] else "%d essência(s)" % NODE_COSTS[i]
 		node_labels[i].text = "%s — %s" % [NODE_NAMES[i], status]

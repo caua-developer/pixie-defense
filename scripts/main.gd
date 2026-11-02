@@ -8,7 +8,7 @@ extends Node2D
 @onready var essence_tracker: Node = $EssenceTracker
 @onready var essence_label: Label = $HUD/Root/VBox/EssenceLabel
 @onready var skill_tree_button: Button = $HUD/Root/VBox/SkillTreeButton
-@onready var skill_tree_panel: PanelContainer = $SkillTreePanel
+@onready var skill_tree_panel: PanelContainer = $HUD/SkillTreePanel
 
 func _ready() -> void:
 	game_over_label.visible = false
