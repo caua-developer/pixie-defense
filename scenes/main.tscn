@@ -3,6 +3,9 @@
 [node name="Main" type="Node2D" unique_id=1404636165]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=495020440]
+position = Vector2(0, 0)
+zoom = Vector2(1, 1)
+current = true
 
 [node name="Mago" type="Node2D" parent="." unique_id=2029505939]
 
