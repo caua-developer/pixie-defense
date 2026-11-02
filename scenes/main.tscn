@@ -1,10 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/base.gd" id="base_script"]
-[ext_resource type="Script" path="res://scripts/mago.gd" id="mago_script"]
-[ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
 [ext_resource type="Script" path="res://scripts/corredor.gd" id="corredor_script"]
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="enemy_scene"]
+[ext_resource type="Script" path="res://scripts/mago.gd" id="mago_script"]
+[ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
 
 [node name="Main" type="Node2D" unique_id=1404636165]
 
@@ -26,3 +26,31 @@ script = ExtResource("corredor_script")
 enemy_scene = ExtResource("enemy_scene")
 
 [node name="SpawnTimer" type="Timer" parent="Corredor1" unique_id=137679326]
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1430594757]
+
+[node name="Root" type="Control" parent="HUD" unique_id=1308304346]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Root" unique_id=1006611760]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+
+[node name="ManaLabel" type="Label" parent="HUD/Root/VBox" unique_id=1154941733]
+layout_mode = 2
+text = "Mana: 100/100"
+
+[node name="BaseLifeLabel" type="Label" parent="HUD/Root/VBox" unique_id=1692286581]
+layout_mode = 2
+text = "Vida da Base: 100/100"
+
+[node name="GameOverLabel" type="Label" parent="HUD/Root/VBox" unique_id=31973210]
+visible = false
+layout_mode = 2
+text = "FIM DE FASE"
