@@ -7,9 +7,6 @@ const SPAWN_INTERVAL: float = 2.0  # segundos, hipótese — calibrar na Fase 10
 @onready var spawn_timer: Timer = $SpawnTimer
 
 func _ready() -> void:
-	curve = Curve2D.new()
-	curve.add_point(Vector2(600, 0))
-	curve.add_point(Vector2(0, 0))
 	spawn_timer.wait_time = SPAWN_INTERVAL
 	spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 	spawn_timer.start()

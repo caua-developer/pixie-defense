@@ -7,6 +7,11 @@
 [ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="main_script"]
 
+[sub_resource type="Curve2D" id="corredor1_curve"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 600, 0, 0, 0, 0, 0, 0, 0)
+}
+
 [node name="Main" type="Node2D" unique_id=1404636165]
 script = ExtResource("main_script")
 
@@ -25,6 +30,7 @@ script = ExtResource("base_script")
 
 [node name="Corredor1" type="Path2D" parent="." unique_id=1346414365]
 script = ExtResource("corredor_script")
+curve = SubResource("corredor1_curve")
 enemy_scene = ExtResource("enemy_scene")
 
 [node name="SpawnTimer" type="Timer" parent="Corredor1" unique_id=137679326]
@@ -38,11 +44,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="HUD/Root" unique_id=1006611760]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
+mouse_filter = 2
 
 [node name="ManaLabel" type="Label" parent="HUD/Root/VBox" unique_id=1154941733]
 layout_mode = 2

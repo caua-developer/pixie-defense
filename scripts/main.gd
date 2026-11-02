@@ -15,5 +15,6 @@ func _process(_delta: float) -> void:
 	base_life_label.text = "Vida da Base: %d/%d" % [int(base.current_life), int(base.MAX_LIFE)]
 
 func _on_base_defeated() -> void:
+	base_life_label.text = "Vida da Base: %d/%d" % [int(base.current_life), int(base.MAX_LIFE)]
 	game_over_label.visible = true
 	get_tree().paused = true
