@@ -24,6 +24,11 @@ Jogo 2D em Godot 4.7 (GL Compatibility), GDScript. Cena principal: `res://scenes
 - Antes de opinar, use a skill `pesquisa-precedentes` e cite jogos que usaram a mecânica (ou similar) e como ela foi recebida.
 - Sem pesquisa, limite-se a descrever trade-offs como hipóteses, marcadas como tal.
 
+## GodotPrompter
+Antes de implementar qualquer sistema Godot (movimento, input, câmera, IA, UI, física, shaders, etc.), agentes e subagentes devem conferir se existe uma skill `godot-prompter:*` correspondente (ex.: `player-controller`, `ai-navigation`, `physics-system`, `godot-ui`, `ability-system`) e invocá-la como referência de *como* implementar.
+
+**A Regra 1 deste CLAUDE.md tem precedência sobre qualquer recomendação dessas skills.** Se uma skill `godot-prompter:*` recomendar uma estrutura maior (Resource genérico, manager, state machine, NavigationAgent/behavior tree, etc.) para um caso que ainda não precisa disso, siga a skill só na parte de execução técnica (ex.: sintaxe correta, padrão de nó) e implemente a versão mínima mesmo assim — registrando a divergência no plano, como já feito no plano da Fase 1 (`docs/superpowers/plans/2026-11-02-fase1-vertical-slice-combate.md`).
+
 ## Skills do projeto
 - `pesquisa-precedentes` — pesquisa de referências focada na mecânica (ignora tema narrativo/visual).
 - `criacao-projeto-2d` — criação de cenas e nós 2D via MCP mantendo arquitetura simples.
