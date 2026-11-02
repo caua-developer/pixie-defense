@@ -6,7 +6,7 @@ Este documento também serve como o registro de exceção exigido pela Regra 1 d
 
 Cada fase, quando for implementada, ganha seu próprio plano via `superpowers:writing-plans` (um plano por fase, não um plano único pra tudo). Este roadmap não substitui esses planos — ele só define a ordem e o escopo mínimo de cada um.
 
-Estado atual do projeto: scaffold vazio (`scenes/main.tscn`, sem scripts). Nenhuma fase abaixo foi iniciada.
+Estado atual do projeto: Fase 0 concluída (cena carrega, mago estático placeholder no centro, câmera fixa ativa — ver `docs/superpowers/plans/2026-11-02-fase0-fundacao-cena.md`). Próxima fase: Fase 1.
 
 ## Fase 0 — Fundação da cena
 **Objetivo:** cena principal carrega, mago estático no centro, câmera fixa em vista de cima.
