@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="enemy_script"]
+[ext_resource type="Shader" path="res://shaders/enemy_tint.gdshader" id="tint_shader"]
 
 [sub_resource type="CircleShape2D" id="enemy_collision_circle"]
 radius = 12.0
+
+[sub_resource type="ShaderMaterial" id="enemy_tint_material"]
+shader = ExtResource("tint_shader")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
 
 [node name="root" type="Area2D" unique_id=1987623386]
 collision_layer = 2
@@ -14,5 +19,6 @@ script = ExtResource("enemy_script")
 shape = SubResource("enemy_collision_circle")
 
 [node name="Visual" type="Polygon2D" parent="." unique_id=1866162570]
+material = SubResource("enemy_tint_material")
 color = Color(1, 1, 1, 1)
 polygon = PackedVector2Array(-12, -12, 12, -12, 12, 12, -12, 12)
