@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://scripts/base.gd" id="base_script"]
 [ext_resource type="Script" path="res://scripts/corredor.gd" id="corredor_script"]
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="enemy_scene"]
+[ext_resource type="Script" path="res://scripts/essence_tracker.gd" id="essence_tracker_script"]
 [ext_resource type="Script" path="res://scripts/mago.gd" id="mago_script"]
-[ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="main_script"]
+[ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
 
 [node name="Main" type="Node2D" unique_id=1404636165]
 script = ExtResource("main_script")
@@ -27,23 +28,22 @@ script = ExtResource("base_script")
 [node name="Corredor1" type="Path2D" parent="." unique_id=1346414365]
 script = ExtResource("corredor_script")
 enemy_scene = ExtResource("enemy_scene")
-start_position = Vector2(600, 0)
 
 [node name="SpawnTimer" type="Timer" parent="Corredor1" unique_id=137679326]
 
-[node name="Corredor2" type="Path2D" parent="."]
+[node name="Corredor2" type="Path2D" parent="." unique_id=1189340970]
 script = ExtResource("corredor_script")
 enemy_scene = ExtResource("enemy_scene")
 start_position = Vector2(-300, 520)
 
-[node name="SpawnTimer" type="Timer" parent="Corredor2"]
+[node name="SpawnTimer" type="Timer" parent="Corredor2" unique_id=1649046139]
 
-[node name="Corredor3" type="Path2D" parent="."]
+[node name="Corredor3" type="Path2D" parent="." unique_id=1558174187]
 script = ExtResource("corredor_script")
 enemy_scene = ExtResource("enemy_scene")
 start_position = Vector2(-300, -520)
 
-[node name="SpawnTimer" type="Timer" parent="Corredor3"]
+[node name="SpawnTimer" type="Timer" parent="Corredor3" unique_id=1058842838]
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1430594757]
 
@@ -74,3 +74,10 @@ text = "Vida da Base: 100/100"
 visible = false
 layout_mode = 2
 text = "FIM DE FASE"
+
+[node name="EssenceLabel" type="Label" parent="HUD/Root/VBox" unique_id=2034260672]
+layout_mode = 2
+text = "Essência: 0 (Fragmentos: 0/10)"
+
+[node name="EssenceTracker" type="Node" parent="." unique_id=1023635728]
+script = ExtResource("essence_tracker_script")

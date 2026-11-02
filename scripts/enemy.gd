@@ -14,10 +14,13 @@ const TIER_COLORS: Array[Color] = [
 	Color(0.25, 0.55, 0.95, 1.0), # azul — matiz hipotética, calibrar visualmente
 	Color(0.9, 0.2, 0.2, 1.0),    # vermelho — matiz hipotética, calibrar visualmente
 ]
+# Índices: 0 branco, 1 verde, 2 azul, 3 vermelho — mesma ordem de TIER_HP_MULT
+const FRAGMENT_DROP: Array[int] = [1, 2, 4, 6]  # hipótese — calibrar na Fase 10 (balancing.md)
 
 var hp: float = MAX_HP
 var speed: float = SPEED
 var contact_damage: float = CONTACT_DAMAGE
+var tier: int = 0
 
 var _curve: Curve2D
 var _distance: float = 0.0
@@ -27,7 +30,8 @@ var _distance: float = 0.0
 func _ready() -> void:
 	add_to_group("inimigos")
 
-func set_tier(tier: int) -> void:
+func set_tier(new_tier: int) -> void:
+	tier = new_tier
 	hp = MAX_HP * TIER_HP_MULT[tier]
 	speed = SPEED * TIER_SPEED_MULT[tier]
 	contact_damage = CONTACT_DAMAGE * TIER_DAMAGE_MULT[tier]
@@ -50,7 +54,13 @@ func _physics_process(delta: float) -> void:
 func take_damage(amount: float) -> void:
 	hp -= amount
 	if hp <= 0.0:
+		_drop_fragments()
 		queue_free()
+
+func _drop_fragments() -> void:
+	var tracker := get_tree().get_first_node_in_group("essencia")
+	if tracker:
+		tracker.add_fragments(FRAGMENT_DROP[tier])
 
 func _on_reached_base() -> void:
 	var base := get_tree().get_first_node_in_group("base")
