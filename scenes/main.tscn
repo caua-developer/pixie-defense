@@ -5,8 +5,10 @@
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="enemy_scene"]
 [ext_resource type="Script" path="res://scripts/mago.gd" id="mago_script"]
 [ext_resource type="PackedScene" path="res://scenes/spell_effect.tscn" id="spell_effect_scene"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="main_script"]
 
 [node name="Main" type="Node2D" unique_id=1404636165]
+script = ExtResource("main_script")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=495020440]
 
