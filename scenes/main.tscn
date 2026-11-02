@@ -11,6 +11,7 @@
 script = ExtResource("main_script")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=495020440]
+zoom = Vector2(0.6, 0.6)
 
 [node name="Mago" type="Node2D" parent="." unique_id=2029505939]
 script = ExtResource("mago_script")

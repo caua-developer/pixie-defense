@@ -6,7 +6,7 @@ Este documento também serve como o registro de exceção exigido pela Regra 1 d
 
 Cada fase, quando for implementada, ganha seu próprio plano via `superpowers:writing-plans` (um plano por fase, não um plano único pra tudo). Este roadmap não substitui esses planos — ele só define a ordem e o escopo mínimo de cada um.
 
-Estado atual do projeto: Fase 1 concluída (1 corredor fixo, 1 inimigo tier branco com spawn por timer, 1 magia com mana/cooldown e mira de área livre, pool de vida da base com fim de fase ao zerar — ver `docs/superpowers/plans/2026-11-02-fase1-vertical-slice-combate.md`). Próxima fase: Fase 2.
+Estado atual do projeto: Fase 2 concluída (3 corredores fixos em disposição radial a 120°, convergindo na torre; tier de cor (branco/verde/azul/vermelho) sorteado por proporção fixa e aplicado via shader de tint, com hp/velocidade/dano escalando por tier; câmera ajustada para enquadrar os 3 corredores sem scroll — ver `docs/superpowers/plans/2026-11-02-fase2-multilane-radial-tier-cor.md`). A ideia de escalar o nº de lanes de 1 a 5 por marco de progressão do save (mencionada ao iniciar esta fase) **não** foi implementada aqui — fica pendente para a fase de progressão entre dias (Fase 6/7), junto da pendência já registrada em `balancing.md` ("Nº de lanes por marco de progressão e em que dia cada marco acontece"). Próxima fase: Fase 3.
 
 ## Fase 0 — Fundação da cena
 **Objetivo:** cena principal carrega, mago estático no centro, câmera fixa em vista de cima.
