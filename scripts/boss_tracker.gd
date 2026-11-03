@@ -30,5 +30,5 @@ func _spawn_boss_tier(tier: int) -> void:
 	var corredores := get_tree().get_nodes_in_group("corredores")
 	if corredores.is_empty():
 		return
-	var corredor = corredores[randi() % corredores.size()]
+	var corredor: Node = corredores[randi() % corredores.size()]
 	corredor.spawn_enemy_with_tier(tier)
