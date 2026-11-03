@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/golem.gd" id="golem_script"]
+
+[node name="root" type="Node2D" unique_id=98364523]
+script = ExtResource("golem_script")
+
+[node name="Visual" type="Polygon2D" parent="." unique_id=1244382735]
+color = Color(0.5, 0.4, 0.3, 1)
+polygon = PackedVector2Array(-14, -14, 14, -14, 14, 14, -14, 14)

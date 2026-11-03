@@ -21,6 +21,7 @@ var hp: float = MAX_HP
 var speed: float = SPEED
 var contact_damage: float = CONTACT_DAMAGE
 var tier: int = 0
+var corredor: Node = null
 
 var _curve: Curve2D
 var _distance: float = 0.0
@@ -44,6 +45,11 @@ func set_path_curve(curve: Curve2D) -> void:
 
 func _physics_process(delta: float) -> void:
 	if _curve == null:
+		return
+	var block_dist: float = corredor.get_block_distance() if corredor else INF
+	if _distance >= block_dist:
+		if corredor.golem:
+			corredor.golem.take_damage(contact_damage * delta)
 		return
 	_distance += speed * delta
 	if _distance >= _curve.get_baked_length():
