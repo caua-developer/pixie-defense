@@ -11,8 +11,12 @@ func _ready() -> void:
 	add_to_group("golems")
 	hp = max_hp
 
-func take_damage(amount: float) -> void:
+func take_damage(amount: float, attacker: Object = null) -> void:
 	hp -= amount
+	if attacker and corredor:
+		var mago: Node = get_tree().get_first_node_in_group("mago")
+		if mago and mago.specialization == "Defensiva":
+			mago._apply_cross_affixes_to_target(attacker)
 	if hp <= 0.0:
 		_die()
 

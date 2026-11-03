@@ -1,5 +1,19 @@
 extends Node2D
 
+enum AffixFlavor { FIRE_BURST, SLOW, DOT }
+
+const CROSS_AFFIX_ORDER: Dictionary = {
+	"Destrutiva": [AffixFlavor.SLOW, AffixFlavor.DOT],
+	"Defensiva": [AffixFlavor.FIRE_BURST, AffixFlavor.DOT],
+	"Maldição": [AffixFlavor.FIRE_BURST, AffixFlavor.SLOW],
+}
+
+const AFFIX_SLOW_MULT: float = 0.5     # hipótese — calibrar na Fase 10
+const AFFIX_SLOW_DURATION: float = 2.0 # segundos, hipótese
+const AFFIX_DOT_DPS: float = 5.0       # hipótese
+const AFFIX_DOT_DURATION: float = 3.0  # segundos, hipótese
+const AFFIX_FIRE_BURST_DAMAGE: float = 20.0  # hipótese
+
 const MAX_MANA: float = 100.0
 const MANA_REGEN_PER_SEC: float = 10.0  # hipótese — calibrar na Fase 10
 const BASE_SPELL_COST: float = 25.0     # hipótese — calibrar na Fase 10
@@ -146,6 +160,28 @@ func _cast_curse(target_pos: Vector2) -> void:
 		var collider: Object = result["collider"]
 		if collider.has_method("apply_curse"):
 			collider.apply_curse(BASE_CURSE_MULT * curse_potencia_mult, BASE_CURSE_DURATION * curse_duration_mult)
+			if specialization == "Maldição":
+				_apply_cross_affixes_to_target(collider)
+
+func get_unlocked_cross_affixes() -> Array[int]:
+	var boss_tracker: Node = get_tree().get_first_node_in_group("boss_tracker")
+	if boss_tracker == null:
+		return []
+	var order: Array = CROSS_AFFIX_ORDER[specialization]
+	var unlocked: Array[int] = []
+	for i in range(int(boss_tracker.affixes_unlocked)):
+		unlocked.append(order[i])
+	return unlocked
+
+func _apply_cross_affixes_to_target(target: Object) -> void:
+	for flavor in get_unlocked_cross_affixes():
+		match flavor:
+			AffixFlavor.SLOW:
+				target.apply_slow(AFFIX_SLOW_MULT, AFFIX_SLOW_DURATION)
+			AffixFlavor.DOT:
+				target.apply_dot(AFFIX_DOT_DPS, AFFIX_DOT_DURATION)
+			AffixFlavor.FIRE_BURST:
+				target.take_damage(AFFIX_FIRE_BURST_DAMAGE)
 
 func _physics_process(_delta: float) -> void:
 	if not _has_pending_cast:
@@ -167,6 +203,8 @@ func _physics_process(_delta: float) -> void:
 			if guardian_fury_unlocked and not get_tree().get_nodes_in_group("golems").is_empty():
 				damage *= GUARDIAN_FURY_DAMAGE_MULT
 			collider.take_damage(damage)
+			if specialization == "Destrutiva":
+				_apply_cross_affixes_to_target(collider)
 
 func _spawn_spell_effect(target_pos: Vector2) -> void:
 	if spell_effect_scene == null:

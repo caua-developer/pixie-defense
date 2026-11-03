@@ -32,6 +32,8 @@ var _distance: float = 0.0
 var _curse_time_remaining: float = 0.0
 var _slow_multiplier: float = 1.0
 var _slow_time_remaining: float = 0.0
+var _dot_dps: float = 0.0
+var _dot_time_remaining: float = 0.0
 
 @onready var visual: Polygon2D = $Visual
 
@@ -62,10 +64,13 @@ func _physics_process(delta: float) -> void:
 		_slow_time_remaining -= delta
 		if _slow_time_remaining <= 0.0:
 			_slow_multiplier = 1.0
+	if _dot_time_remaining > 0.0:
+		_dot_time_remaining -= delta
+		take_damage(_dot_dps * delta)
 	var block_dist: float = corredor.get_block_distance() if corredor else INF
 	if _distance >= block_dist:
 		if corredor.golem:
-			corredor.golem.take_damage(contact_damage * delta)
+			corredor.golem.take_damage(contact_damage * delta, self)
 		return
 	_distance += speed * _slow_multiplier * delta
 	if _distance >= _curve.get_baked_length():
@@ -86,6 +91,10 @@ func apply_curse(multiplier: float, duration: float) -> void:
 func apply_slow(multiplier: float, duration: float) -> void:
 	_slow_multiplier = multiplier
 	_slow_time_remaining = duration
+
+func apply_dot(dps: float, duration: float) -> void:
+	_dot_dps = dps
+	_dot_time_remaining = duration
 
 func _on_death() -> void:
 	var boss_tracker := get_tree().get_first_node_in_group("boss_tracker")
