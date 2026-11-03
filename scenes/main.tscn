@@ -85,6 +85,10 @@ text = "Essência: 0 (Fragmentos: 0/10)"
 layout_mode = 2
 text = "Árvore"
 
+[node name="TreeManaLabel" type="Label" parent="HUD/Root/VBox" unique_id=299893256]
+layout_mode = 2
+text = "Mana de Árvore: 100/100"
+
 [node name="SkillTreePanel" type="PanelContainer" parent="HUD" unique_id=84338893]
 visible = false
 custom_minimum_size = Vector2(320, 220)
