@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/base.gd" id="base_script"]
+[ext_resource type="Script" path="res://scripts/boss_tracker.gd" id="boss_tracker_script"]
 [ext_resource type="Script" path="res://scripts/corredor.gd" id="corredor_script"]
 [ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="enemy_scene"]
 [ext_resource type="Script" path="res://scripts/essence_tracker.gd" id="essence_tracker_script"]
@@ -88,6 +89,10 @@ text = "Árvore"
 [node name="TreeManaLabel" type="Label" parent="HUD/Root/VBox" unique_id=299893256]
 layout_mode = 2
 text = "Mana de Árvore: 100/100"
+
+[node name="BossEssenceLabel" type="Label" parent="HUD/Root/VBox" unique_id=1974005522]
+layout_mode = 2
+text = "Essência de Boss: 0.0/2 afixos"
 
 [node name="SkillTreePanel" type="PanelContainer" parent="HUD" unique_id=84338893]
 visible = false
@@ -187,3 +192,6 @@ text = "Confirmar"
 
 [node name="EssenceTracker" type="Node" parent="." unique_id=1023635728]
 script = ExtResource("essence_tracker_script")
+
+[node name="BossTracker" type="Node" parent="." unique_id=1135409749]
+script = ExtResource("boss_tracker_script")

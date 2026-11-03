@@ -13,6 +13,8 @@ const SaveManagerScript = preload("res://scripts/save_manager.gd")
 @onready var skill_tree_panel: PanelContainer = $HUD/SkillTreePanel
 @onready var specialization_panel: PanelContainer = $HUD/SpecializationSelectPanel
 @onready var tree_mana_label: Label = $HUD/Root/VBox/TreeManaLabel
+@onready var boss_tracker: Node = $BossTracker
+@onready var boss_essence_label: Label = $HUD/Root/VBox/BossEssenceLabel
 
 var save_manager: RefCounted
 
@@ -32,6 +34,7 @@ func _process(_delta: float) -> void:
 	base_life_label.text = "Vida da Base: %d/%d" % [int(base.current_life), int(base.MAX_LIFE)]
 	essence_label.text = "Essência: %d (Fragmentos: %d/10)" % [essence_tracker.essence, essence_tracker.fragments]
 	tree_mana_label.text = "Mana de Árvore: %d/%d" % [int(mago.tree_mana), int(mago.MAX_TREE_MANA)]
+	boss_essence_label.text = "Essência de Boss: %.1f (%d/2 afixos)" % [boss_tracker.boss_essence, boss_tracker.affixes_unlocked]
 
 func _on_base_defeated() -> void:
 	base_life_label.text = "Vida da Base: %d/%d" % [int(base.current_life), int(base.MAX_LIFE)]
