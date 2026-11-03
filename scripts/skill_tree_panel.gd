@@ -1,7 +1,16 @@
 extends PanelContainer
 
 const NODE_COUNT: int = 4
-const NODE_NAMES: Array[String] = ["Dano+", "Cooldown-", "Custo de Mana-", "Raio+"]
+const TREE_NODE_NAMES: Dictionary = {
+	"Destrutiva": ["Dano+", "Cooldown-", "Custo de Mana-", "Raio+"],
+	"Defensiva": ["Golem HP+", "Golem Cooldown-", "Golem Custo de Mana-", "Fúria do Guardião"],
+	"Maldição": ["Potência+", "Duração+", "Cooldown-", "Custo de Mana-"],
+}
+const AFFIX_FLAVOR_NAMES: Dictionary = {
+	0: "Estouro de Fogo", # AffixFlavor.FIRE_BURST
+	1: "Lentidão",        # AffixFlavor.SLOW
+	2: "Dano Contínuo",   # AffixFlavor.DOT
+}
 const NODE_COSTS: Array[int] = [1, 2, 3, 4]
 
 var purchased: Array[bool] = [false, false, false, false]
@@ -19,6 +28,7 @@ var essence_tracker: Node
 	$VBox/Node3Row/Node3Button, $VBox/Node4Row/Node4Button,
 ]
 @onready var close_button: Button = $VBox/CloseButton
+@onready var affix_labels: Array[Label] = [$VBox/Affix1Label, $VBox/Affix2Label]
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -49,16 +59,38 @@ func _on_node_pressed(index: int) -> void:
 		return
 	essence_tracker.essence -= NODE_COSTS[index]
 	purchased[index] = true
-	match index:
-		0: mago.upgrade_damage()
-		1: mago.reduce_cooldown()
-		2: mago.reduce_mana_cost()
-		3: mago.increase_radius()
+	match mago.specialization:
+		"Destrutiva":
+			match index:
+				0: mago.upgrade_damage()
+				1: mago.reduce_cooldown()
+				2: mago.reduce_mana_cost()
+				3: mago.increase_radius()
+		"Defensiva":
+			match index:
+				0: mago.upgrade_golem_hp()
+				1: mago.reduce_tree_cooldown()
+				2: mago.reduce_tree_mana_cost()
+				3: mago.unlock_guardian_fury()
+		"Maldição":
+			match index:
+				0: mago.upgrade_curse_potencia()
+				1: mago.upgrade_curse_duration()
+				2: mago.reduce_tree_cooldown()
+				3: mago.reduce_tree_mana_cost()
 	_update_labels()
 
 func _update_labels() -> void:
 	balance_label.text = "Essência disponível: %d" % essence_tracker.essence
+	var names: Array = TREE_NODE_NAMES[mago.specialization]
 	for i in NODE_COUNT:
 		var status: String = "comprado" if purchased[i] else "%d essência(s)" % NODE_COSTS[i]
-		node_labels[i].text = "%s — %s" % [NODE_NAMES[i], status]
+		node_labels[i].text = "%s — %s" % [names[i], status]
 		node_buttons[i].disabled = purchased[i]
+	var boss_tracker := get_tree().get_first_node_in_group("boss_tracker")
+	var unlocked: int = boss_tracker.affixes_unlocked if boss_tracker else 0
+	var order: Array = mago.CROSS_AFFIX_ORDER[mago.specialization]
+	for i in 2:
+		var flavor_name: String = AFFIX_FLAVOR_NAMES[order[i]]
+		var status: String = "destravado" if i < unlocked else "bloqueado (precisa de %d.0 essência de boss)" % (i + 1)
+		affix_labels[i].text = "Afixo cruzado: %s — %s" % [flavor_name, status]

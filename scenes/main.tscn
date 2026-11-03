@@ -152,6 +152,12 @@ layout_mode = 2
 layout_mode = 2
 text = "Comprar"
 
+[node name="Affix1Label" type="Label" parent="HUD/SkillTreePanel/VBox" unique_id=1031402329]
+layout_mode = 2
+
+[node name="Affix2Label" type="Label" parent="HUD/SkillTreePanel/VBox" unique_id=1517683803]
+layout_mode = 2
+
 [node name="CloseButton" type="Button" parent="HUD/SkillTreePanel/VBox" unique_id=936977209]
 layout_mode = 2
 text = "Fechar"
