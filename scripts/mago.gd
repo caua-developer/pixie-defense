@@ -173,7 +173,7 @@ func get_unlocked_cross_affixes() -> Array[int]:
 		unlocked.append(order[i])
 	return unlocked
 
-func _apply_cross_affixes_to_target(target: Object) -> void:
+func _apply_cross_affixes_to_target(target: Object, allow_burst: bool = true) -> void:
 	for flavor in get_unlocked_cross_affixes():
 		match flavor:
 			AffixFlavor.SLOW:
@@ -181,7 +181,8 @@ func _apply_cross_affixes_to_target(target: Object) -> void:
 			AffixFlavor.DOT:
 				target.apply_dot(AFFIX_DOT_DPS, AFFIX_DOT_DURATION)
 			AffixFlavor.FIRE_BURST:
-				target.take_damage(AFFIX_FIRE_BURST_DAMAGE)
+				if allow_burst:
+					target.take_damage(AFFIX_FIRE_BURST_DAMAGE)
 
 func _physics_process(_delta: float) -> void:
 	if not _has_pending_cast:

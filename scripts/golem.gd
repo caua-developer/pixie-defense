@@ -16,9 +16,10 @@ func take_damage(amount: float, attacker: Object = null) -> void:
 	hp -= amount
 	if attacker and corredor:
 		var mago: Node = get_tree().get_first_node_in_group("mago")
-		if mago and mago.specialization == "Defensiva" and attacker != _last_affixed_attacker:
-			mago._apply_cross_affixes_to_target(attacker)
+		if mago and mago.specialization == "Defensiva":
+			var is_new_attacker: bool = attacker != _last_affixed_attacker
 			_last_affixed_attacker = attacker
+			mago._apply_cross_affixes_to_target(attacker, is_new_attacker)
 	if hp <= 0.0:
 		_die()
 
