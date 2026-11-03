@@ -34,6 +34,7 @@ var _slow_multiplier: float = 1.0
 var _slow_time_remaining: float = 0.0
 var _dot_dps: float = 0.0
 var _dot_time_remaining: float = 0.0
+var _is_blocked: bool = false
 
 @onready var visual: Polygon2D = $Visual
 
@@ -68,7 +69,11 @@ func _physics_process(delta: float) -> void:
 		_dot_time_remaining -= delta
 		take_damage(_dot_dps * delta)
 	var block_dist: float = corredor.get_block_distance() if corredor else INF
-	if _distance >= block_dist:
+	if block_dist == INF:
+		_is_blocked = false
+	elif _is_blocked or (_distance < block_dist and _distance + speed * _slow_multiplier * delta >= block_dist):
+		_is_blocked = true
+		_distance = block_dist
 		if corredor.golem:
 			corredor.golem.take_damage(contact_damage * delta, self)
 		return
@@ -79,6 +84,8 @@ func _physics_process(delta: float) -> void:
 	position = _curve.sample_baked(_distance, true)
 
 func take_damage(amount: float) -> void:
+	if hp <= 0.0:
+		return
 	hp -= amount * damage_taken_multiplier
 	if hp <= 0.0:
 		_on_death()
